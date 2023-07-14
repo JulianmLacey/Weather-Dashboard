@@ -1,0 +1,36 @@
+
+header{
+    height:50px;
+    
+    text-justify:distribute;
+    
+    background-image: linear-gradient(to bottom left, blue, lightBlue);
+    
+}
+
+.container{
+    border-style: solid;
+    border-color: yellow;
+    border-width: 1px;
+}
+
+
+.col-sm, .col-md-auto{
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+}
+
+.forecast-card{
+    border-style: solid;
+    border-color: purple;
+    border-width: 1px;
+
+    
+}
+
+#card-container{
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
