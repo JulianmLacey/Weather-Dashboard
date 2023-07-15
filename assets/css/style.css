@@ -8,29 +8,10 @@ header{
     
 }
 
-.container{
-    border-style: solid;
-    border-color: yellow;
-    border-width: 1px;
-}
 
-
-.col-sm, .col-md-auto{
-    border-style: solid;
-    border-color: green;
-    border-width: 1px;
-}
-
-.forecast-card{
-    border-style: solid;
-    border-color: purple;
-    border-width: 1px;
-
-    
-}
-
-#card-container{
+.forecast{
     border-style: solid;
     border-color: black;
     border-width: 1px;
+    padding: 5px;
 }
