@@ -1,24 +1,3 @@
-/* PSUEDO-CODE
-
--------VARIABLES------
-search input - text input
-search input - button
-Cities array
-
-ON SEARCH ENTRY (button event listener)
--add search text to cities array
--get city coordinates
--save data to new object
--save new object to local storage
-
-ON CITY SELECTION
--get object from local storage
-  -id of city name
--render each weather card with specific city weather
-
-
-
-*/
 
 var searchInput = document.getElementById("searchInput");
 var searchInputBtn = document.getElementById("searchInputBtn");
@@ -71,8 +50,8 @@ function getWeather(cityLat, cityLon, cityName) {
 //-------------------RENDERING CARDS-------------------------------
 
 function renderSelectedCityCards(index) {
-  //FUTURE FORECAST
-  $("#DisplayCityText").text(Cities[index].city.name);
+  $("#DisplayCityText").text(Cities[index].city.name); //city name
+  //remove previouse elements
   var childElements = document.getElementById("card-container");
   var remChild = childElements.lastChild;
   while (remChild) {
@@ -86,11 +65,13 @@ function renderSelectedCityCards(index) {
     remChild = childElements.lastChild;
   }
 
+    //render current weather
   var currentWeather = $("#currentWeather");
   var Ctemp = Cities[index].list[0].main.temp;
   var wind = Cities[index].list[0].wind.speed;
   var humidity = Cities[index].list[0].main.humidity;
   var iconcode = Cities[index].list[0].weather[0].icon;
+
 
   var headerTxt = $("<h3>")
     .text(dayjs().format("dddd, MMMM DD"))
@@ -111,6 +92,7 @@ function renderSelectedCityCards(index) {
 
   $("<sup>").text("-3").appendTo(h);
 
+  //render future forcast cards
   for (var i = 1; i < 7; i++) {
     renderCard(
       Cities[index].list[i].main.temp,
@@ -167,10 +149,6 @@ function init() {
       $("<span>").text(Cities[i].city.name).appendTo(bttn);
       $("#DisplayCityText").text(Cities[i].city.name);
     }
-    //console.log(Cities[0].list[1].weather[0].icon);
-    //for(var i = 1; i <7;i++){
-    //renderCard(Cities[0].list[i].main.temp, Cities[0].list[i].wind.speed ,Cities[0].list[i].main.humidity,i, Cities[0].list[i].weather[0].icon);
-    //}
     renderSelectedCityCards(0);
   }else{
     Cities = [];
@@ -179,6 +157,7 @@ function init() {
 }
 init();
 
+//button event caller
 $(document).on("click", "#SavedCitiesBtns", function (e) {
   var btnIndex = e.target.classList[4].charAt(11);
   $("#DisplayCityText").text(Cities[btnIndex].city.name);
