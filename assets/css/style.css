@@ -1,0 +1,17 @@
+
+header{
+    height:50px;
+    
+    text-justify:distribute;
+    
+    background-image: linear-gradient(to bottom left, darkBlue 20%, lightBlue);
+    
+}
+
+
+.forecast{
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    padding: 5px;
+}
