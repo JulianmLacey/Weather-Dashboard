@@ -22,16 +22,13 @@ ON CITY SELECTION
 
 
 
-
-
-
-
 var searchInput = document.getElementById("searchInput");
 var searchInputBtn = document.getElementById("searchInputBtn");
 var BTNGroup = document.getElementById("SearchResultsBtnGroup");
 
 var Cities = [];
-
+var todayDate = dayjs();
+console.log(todayDate.format('MMMM DD, YYYY'));
 //-------------------SEARCHING-----------------------------------
 searchInputBtn.addEventListener("click", function (event) {
   console.log(searchInput.value);
@@ -76,8 +73,25 @@ function getWeather(cityCoordLat, cityCoordLon, cityName) {
 
 
 function renderSelectedCityCards(index){
+  var currentWeather = $("#currentWeather");
+  var Ctemp = Cities[index].list[0].main.temp;
+  var wind= Cities[index].list[0].wind.speed;
+  var humidity= Cities[index].list[0].main.humidity;
+  var iconcode= Cities[index].list[0].weather[0].icon;
 
-
+  var headerTxt = $("<h3>").text(dayjs().format('dddd, MMMM DD')).appendTo(currentWeather);//date
+  var C_Body = $("<h4>").appendTo(currentWeather);
+  var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+  $("<img>").attr("src", iconurl).appendTo(headerTxt);
+  //temp
+  $("<h5>").text("Temp: "+Ctemp+"°f").appendTo(currentWeather); //temp
+  //wind + Humidity
+  var h =$("<p>").text("Wind: "+wind+" mph\n Humidity: "+humidity+" g.m").appendTo(currentWeather);
+  h.html(h.html().replace(/\n/g,'<br/>'));
+  //humidity
+  
+  $("<sup>").text("-3").appendTo(h);
+  
 
   //FUTURE FORECAST
   var childElements = document.getElementById("card-container");
@@ -88,23 +102,32 @@ function renderSelectedCityCards(index){
    }
 
   for(var i = 1; i <7;i++){
-    renderCard(Cities[index].list[i].main.temp, Cities[index].list[i].wind.speed ,Cities[index].list[i].main.humidity);
+    renderCard(Cities[index].list[i].main.temp, Cities[index].list[i].wind.speed ,Cities[index].list[i].main.humidity, i, Cities[index].list[i].weather[0].icon);
   }
 }
 
 
-function renderCard(Ctemp, wind, humidity) {
-  var container = $("#card-container");
+function renderCard(Ctemp, wind, humidity, k, iconcode) {
 
+  var container = $("#card-container");
 
   var newCard = $("<div>");
   newCard
     .attr("class", "card text-white bg-primary m-3")
     .attr("style", "min-width: 14rem; min-height: 225px;");
-  $("<div>").attr("class", "card-header").text(Ctemp).appendTo(newCard);
+    //date
+  var headerTxt = $("<div>").attr("class", "card-header pt-1 pb-1").text(dayjs().add(k, 'days').format('dddd, MMMM DD')).appendTo(newCard);//date
   var C_Body = $("<div>").attr("class", "card-body").appendTo(newCard);
-  $("<h5>").attr("class", "card-title").text(humidity).appendTo(C_Body);
-  $("<p>").attr("class", "card-text").text(humidity).appendTo(C_Body);
+  var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+  $("<img>").attr("src", iconurl).appendTo(headerTxt);
+  //temp
+  $("<h5>").attr("class", "card-title").text("Temp: "+Ctemp+"°f").appendTo(C_Body); //temp
+  //wind + Humidity
+  var h =$("<p>").attr("class", "card-text").text("Wind: "+wind+" mph\n Humidity: "+humidity+" g.m").appendTo(C_Body);
+  h.html(h.html().replace(/\n/g,'<br/>'));
+  //humidity
+  
+  $("<sup>").text("-3").appendTo(h);
   newCard.appendTo(container);
 }
 
@@ -117,10 +140,11 @@ function init(){
       var bttn = $("<button>").attr("class", "btn btn-dark mt-1 w-100 buttonIndex"+i).attr("id", "SavedCitiesBtns").appendTo(BTNGroup);
       $("<span>").text(Cities[i].city.name).appendTo(bttn);
     }
-    for(var i = 1; i <7;i++){
-      renderCard(Cities[0].list[i].main.temp, Cities[0].list[i].wind.speed ,Cities[0].list[i].main.humidity);
-    }
- 
+    //console.log(Cities[0].list[1].weather[0].icon);
+    //for(var i = 1; i <7;i++){
+      //renderCard(Cities[0].list[i].main.temp, Cities[0].list[i].wind.speed ,Cities[0].list[i].main.humidity,i, Cities[0].list[i].weather[0].icon);
+    //}
+    renderSelectedCityCards(0);
   }
 }
 init();

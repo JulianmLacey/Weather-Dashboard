@@ -4,7 +4,7 @@ header{
     
     text-justify:distribute;
     
-    background-image: linear-gradient(to bottom left, blue, lightBlue);
+    background-image: linear-gradient(to bottom left, darkBlue 20%, lightBlue);
     
 }
 
